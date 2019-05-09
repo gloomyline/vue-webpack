@@ -35,17 +35,13 @@
   },
   "dependencies": {
     {{#if_eq deviceType "mobile"}}
-    "amfe-flexible": "^2.2.1",
-    {{#UILib}}
-    "cube-ui": "^1.12.18",
-    {{/UILib}}
+    "amfe-flexible": "^2.2.1"{{#UILib}},
+    "cube-ui": "^1.12.18",{{/UILib}}
     {{/if_eq}}
     "axios": "^0.18.0",
     "vue": "^2.5.2"{{#router}},
-    "vue-router": "^3.0.1",{{/router}}
-    {{#vuex}}
-    "vuex": "^3.1.0",
-    {{/vuex}}
+    "vue-router": "^3.0.1"{{/router}}{{#vuex}},
+    "vuex": "^3.1.0"{{/vuex}}
   },
   {{#UILib}}
   {{#if_eq deviceType "mobile"}}
@@ -124,7 +120,7 @@
     {{/UILib}}
     {{/if_eq}}
     {{#mock}}
-    "mockjs": "^1.0.1-beta3"
+    "mockjs": "^1.0.1-beta3",
     {{/mock}}
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
