@@ -7,6 +7,11 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
+    {{#mock}}
+    {{#if_eq mockConfig "json-server"}}
+    "mock": "nodemon mock/server.js",
+    {{/if_eq}}
+    {{/mock}}
     {{#if_eq runner "jest"}}
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     {{/if_eq}}
@@ -21,13 +26,37 @@
     {{/if_or}}
     {{#lint}}
     "lint": "eslint --ext .js,.vue src{{#unit}} test/unit{{/unit}}{{#e2e}} test/e2e/specs{{/e2e}}",
+    "fix-lint": "eslint --ext .js,.vue src --fix",
     {{/lint}}
+    {{#dll}}
+    "dll": "webpack --config webpack.dll.config.js",
+    {{/dll}}
     "build": "node build/build.js"
   },
   "dependencies": {
+    {{#if_eq deviceType "mobile"}}
+    "amfe-flexible": "^2.2.1",
+    {{#UILib}}
+    "cube-ui": "^1.12.18",
+    {{/UILib}}
+    {{/if_eq}}
+    "axios": "^0.18.0",
     "vue": "^2.5.2"{{#router}},
-    "vue-router": "^3.0.1"{{/router}}
+    "vue-router": "^3.0.1",{{/router}}
+    {{#vuex}}
+    "vuex": "^3.1.0",
+    {{/vuex}}
   },
+  {{#UILib}}
+  {{#if_eq deviceType "mobile"}}
+  "transformModules"： {
+    "cube-ui": {
+      "transform": "cube-ui/src/modules/${member}",
+      "kebabCase": true
+    }
+  },  
+  {{/if_eq}}
+  {{/UILib}}
   "devDependencies": {
     {{#lint}}
     "babel-eslint": "^8.2.1",
@@ -82,6 +111,21 @@
     "nightwatch": "^0.9.12",
     "selenium-server": "^3.0.1",
     {{/e2e}}
+    {{#pug}}
+    "pug": "^2.0.3",
+    "pug-plain-loader": "^1.0.0",
+    "raw-loader": "^2.0.0",
+    {{/pug}}
+    {{#if_eq deviceType "mobile"}}
+    "postcss-px2rem": "^0.3.0",
+    {{#UILib}}
+    "webpack-post-compile-plugin": "^1.0.0",
+    "webpack-transform-modules-plugin": "^0.4.3",
+    {{/UILib}}
+    {{/if_eq}}
+    {{#mock}}
+    "mockjs": "^1.0.1-beta3"
+    {{/mock}}
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
@@ -105,6 +149,8 @@
     "postcss-url": "^7.2.1",
     "semver": "^5.3.0",
     "shelljs": "^0.7.6",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.2.0",
     "rimraf": "^2.6.0",
@@ -117,6 +163,9 @@
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.0"
+  },
+  "peerDependencies": {
+    "lodash": "^4.17.11"
   },
   "engines": {
     "node": ">= 6.0.0",

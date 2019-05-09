@@ -9,7 +9,11 @@ const sourceMapEnabled = isProduction
 module.exports = {
   loaders: utils.cssLoaders({
     sourceMap: sourceMapEnabled,
+    {{#if_eq deviceType "Mobile"}}
+    extract: false
+    {{else}}
     extract: isProduction
+    {{/if_eq}}
   }),
   cssSourceMap: sourceMapEnabled,
   cacheBusting: config.dev.cacheBusting,

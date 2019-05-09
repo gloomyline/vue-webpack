@@ -74,6 +74,53 @@ module.exports = {
       type: 'confirm',
       message: 'Install vue-router?',
     },
+    vuex: {
+      when: 'isNotTest',
+      type: 'confirm',
+      message: 'Install vuex?',
+    },
+    dll: {
+      when: 'isNotTest',
+      type: 'confirm',
+      message: 'Use webpack dll plugin for vendor precompilre?'
+    },
+    filters: {
+      when: 'isNotTest',
+      type: 'confirm',
+      message: 'Init filters?',
+    },
+    mock: {
+      when: 'isNotTest',
+      type: 'confirm',
+      message: 'Use mock api?'
+    },
+    pug: {
+      when: 'isNotTest',
+      type: 'confirm',
+      message: 'Use pug as the template precessor?'
+    },
+    UILib:{
+      when: 'isNotTest',
+      type: 'confirm',
+      message: 'Use UI component lib?',
+    },
+    deviceType: {
+      when: 'isNotTest',
+      type: 'list',
+      message: 'Pick a device type.',
+      choices: [
+        {
+          name: 'PC, for pc web.',
+          value: 'PC',
+          short: 'PC'
+        },
+        {
+          name: 'mobile, for mobile web app.',
+          value: 'mobile',
+          short: 'mobile'
+        }
+      ]
+    },
     lint: {
       when: 'isNotTest',
       type: 'confirm',
@@ -100,6 +147,11 @@ module.exports = {
           short: 'none',
         },
       ],
+    },
+    prettier: {
+      when: 'isNotTest && !lint',
+      type: 'confirm',
+      message: 'Use prettier'
     },
     unit: {
       when: 'isNotTest',
@@ -170,6 +222,11 @@ module.exports = {
     'test/unit/setup.js': "unit && runner === 'jest'",
     'test/e2e/**/*': 'e2e',
     'src/router/**/*': 'router',
+    'src/store/**/*': 'vuex',
+    'src/common/javascripts/utils/filters/*': 'filters',
+    'mock/data/**/*': 'mock',
+    '.prettierrc.js': 'prettier',
+    'webpack.dll.config.js': 'dll',
   },
   complete: function(data, { chalk }) {
     const green = chalk.green

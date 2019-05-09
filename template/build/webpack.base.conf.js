@@ -3,6 +3,11 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+{{#UILib}}
+// cube-ui modules post-compile plugins
+const PostCompilePlugins = require('webpack-post-compile-plugin')
+const TransformModulesPlugins = require('webpack-transform-modules-plugin')
+{{/UILib}}
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -38,6 +43,7 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm.js',
       {{/if_eq}}
       '@': resolve('src'),
+      '~common': resolve('src/common')
     }
   },
   module: {
@@ -55,6 +61,22 @@ module.exports = {
         loader: 'babel-loader',
         include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
       },
+      {{#pug}}
+      {
+        test: /\.pug$/,
+        oneOf: [
+          // this applies to `<template lang="pug">` in Vue components
+          {
+            resourceQuery: /^\?vue/,
+            use: ['pug-plain-loader']
+          },
+          // this applies to pug imports in Javascript
+          {
+            use: ['raw-loader', 'pug-plain-loader']
+          }
+        ]
+      },
+      {{/pug}}
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
@@ -92,5 +114,12 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
     child_process: 'empty'
-  }
+  }{{#UILib}},
+  {{#if_eq deviceType "mobile"}}
+  plugins: [
+    new PostComplilePlugins(),
+    new TransformModulesPlugins()
+  ]
+  {{/if_eq}}
+  {{/UILib}}
 }

@@ -29,6 +29,15 @@ exports.cssLoaders = function (options) {
     }
   }
 
+  const stylusOpts = {
+    // https://github.com/vuejs-templates/webpack/pull/970 stylus-loader 'resolve url'
+    'resolve url': true,
+    import: [
+      path.join(__dirname, '../src/common/styles/variables.styl'),
+      path.join(__dirname, '../src/common/styles/mixin.styl')
+    ]
+  }
+
   // generate loader string to be used with extract text plugin
   function generateLoaders (loader, loaderOptions) {
     const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
@@ -61,8 +70,8 @@ exports.cssLoaders = function (options) {
     less: generateLoaders('less'),
     sass: generateLoaders('sass', { indentedSyntax: true }),
     scss: generateLoaders('sass'),
-    stylus: generateLoaders('stylus'),
-    styl: generateLoaders('stylus')
+    stylus: generateLoaders('stylus', stylusOpts),
+    styl: generateLoaders('stylus', stylusOpts)
   }
 }
 
