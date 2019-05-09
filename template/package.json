@@ -45,7 +45,7 @@
   },
   {{#UILib}}
   {{#if_eq deviceType "mobile"}}
-  "transformModules"： {
+  "transformModules": {
     "cube-ui": {
       "transform": "cube-ui/src/modules/${member}",
       "kebabCase": true
