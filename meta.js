@@ -148,11 +148,6 @@ module.exports = {
         },
       ],
     },
-    prettier: {
-      when: 'isNotTest && !lint',
-      type: 'confirm',
-      message: 'Use prettier'
-    },
     unit: {
       when: 'isNotTest',
       type: 'confirm',
@@ -225,7 +220,6 @@ module.exports = {
     'src/store/**/*': 'vuex',
     'src/common/javascripts/utils/filters/*': 'filters',
     'mock/data/**/*': 'mock',
-    '.prettierrc.js': 'prettier',
     'webpack.dll.config.js': 'dll',
   },
   complete: function(data, { chalk }) {
